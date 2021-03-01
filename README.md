@@ -32,14 +32,16 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 登录npm，执行：npm publish
 
 ## 使用
+
+```html
 html:
 <zy-editable-table [id]="'test'"
 [config]="tableConfig"
 [lang]="tableConfigLang"
 [data]="data"
 (outer)="insetData($event)"></zy-editable-table>
-
-ts:
+```
+```javascript
 tableConfigLang = {
     operating: '操作',
     reset: '重置',
@@ -87,3 +89,4 @@ tableConfigLang = {
       console.log('编辑')
     }
   }
+```
