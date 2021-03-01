@@ -99,3 +99,9 @@ tbody > tr {
  font-size: 16px;
  padding: 3px 7px 3px 7px;
 }
+select {
+  color: #fff;
+  background: #313859;
+  border-radius: 5px;
+  outline: none;
+}

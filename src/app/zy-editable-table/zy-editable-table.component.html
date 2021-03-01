@@ -8,7 +8,7 @@
 							(click)="openSearch(item.key)">search</mat-icon>
 						<div class="search filters" (mousedown)="$event.stopPropagation()" *ngIf="showSearch[item.key]">
 							<input class="table-search" type="text" [(ngModel)]="searchObj[item.key]">
-							<span class="table-reset" (click)="searchReset(item.key)">{{'PUBLIC.reset'}}</span>
+							<span class="table-reset" (click)="searchReset(item.key)">{{lang.reset || '重置'}}</span>
 						</div>
 					</div>
 					<div class="table-head" *ngIf="item.filters && item.filters.length">
@@ -21,14 +21,14 @@
 									[checked]="filterObj[item.key].indexOf(i.value) > -1" [value]="i.value">{{i.name}}</mat-checkbox>
 							</div>
 							<div class="filter-foot">
-								<span class="table-reset" (click)="filersReset(item.key)">{{'PUBLIC.reset'}}</span>
+								<span class="table-reset" (click)="filersReset(item.key)">{{lang.reset || '重置'}}</span>
 							</div>
 						</div>
 					</div>
 					<span>{{item.name}}</span>
 
 				</th>
-				<th>{{'PUBLIC.OPERATING'}}</th>
+				<th>{{lang.operating || '操作'}}</th>
 			</tr>
 		</thead>
 
@@ -69,8 +69,8 @@
 	</div>
 
 	<div [id]="id + 'customMenu'" class="customMenu" [hidden]="!showMenu">
-		<div (click)="menuAction('up')">{{'PUBLIC.up_into'}}</div>
-		<div (click)="menuAction('down')">{{'PUBLIC.down_into'}}</div>
-		<div (click)="menuAction('delete')">{{'PUBLIC.delete'}}</div>
+		<div (click)="menuAction('up')">{{lang.up || '向上插入一条'}}</div>
+		<div (click)="menuAction('down')">{{lang.down || '向下插入一条'}}</div>
+		<div (click)="menuAction('delete')">{{lang.delete || '删除'}}</div>
 	</div>
 </div>

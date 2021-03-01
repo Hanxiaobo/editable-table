@@ -9,6 +9,7 @@ export class ZyEditableTableComponent implements OnInit {
 	@Input() config: any;
 	@Input() data: any;
 	@Input() id: string;
+  @Input() lang: any;
 	@Output() private outer = new EventEmitter<string>();
 	showMenu = false;
 	currentSelectIndex;

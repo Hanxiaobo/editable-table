@@ -7,6 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'zy-editable';
+  tableConfigLang = {
+    operating: '操作',
+    reset: '重置',
+    up: '向上出入一条',
+    down: '向下插入一条',
+    delete: '删除'
+  }
   tableConfig = [
     { name: 'Path', key: 'Path', type: 'text', search: true },
     {
