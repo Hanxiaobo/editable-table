@@ -61,7 +61,7 @@ tableConfigLang = {
       filters: [{ name: 'open', value: true }, { name: 'close', value: false }]
     },
     {
-      name: '选择', key: 'CaseSensitive', type: 'select',
+      name: '选择', key: 'field', type: 'select',
       filters: [
         { name: 'Any Field Type', value: '' },
         { name: 'Checkbox', value: 'checkbox' },
@@ -72,7 +72,7 @@ tableConfigLang = {
         { name: 'Textarea', value: 'textarea' }
       ]
     }];
-  data = [{ ip: "1.1.1.1", show: true, CaseSensitive: "checkbox" }];
+  data = [{ ip: "1.1.1.1", show: true, field: "checkbox" }];
 
   insetData($event) {
     let data = JSON.parse($event)
