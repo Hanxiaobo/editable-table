@@ -1,0 +1,101 @@
+.td_custom {
+	text-align: center;
+}
+.editable-table {
+	margin-bottom: 20px;
+}
+.customMenu {
+	position: fixed;
+	text-align: center;
+	background: #313859;
+	border-radius: 5px;
+	z-index: 1000;
+}
+.customMenu > div {
+	cursor: pointer;
+	height: 25px;
+	line-height: 25px;
+	padding: 5px 10px 5px 10px;
+}
+.customMenu > div:hover{
+	background: #222B59;
+}
+input {
+	width: 95%;
+	border-radius: 10px;
+ outline: none;
+ padding-left: 10px;
+}
+.mat-icon {
+	cursor: pointer;
+	width: unset;
+	font-size: 16px;
+	height: unset;
+}
+.filters {
+	position: absolute;
+ color: white;
+ background: #313859;
+ width: max-content;
+	min-width: 70px;
+	text-align: left;
+	padding: 10px;
+	border-radius: 5px;
+ border: 1px solid #414867;
+}
+.filter-foot {
+	margin-top: 10px;
+}
+
+.hasFilter {
+	color: #5DDAFE;
+}
+.table-head {
+	position: relative;
+	display: inline-block;
+}
+table {
+	border-color: #36417d;
+}
+thead {
+	font-size: 12px;
+}
+tbody > tr {
+	height: 34px;
+}
+.table-operating > .mat-icon {
+	font-size: 20px;
+}
+.mat-slide-toggle {
+	height: unset;
+	line-height: unset;
+}
+.table-reset {
+	display: inline-block;
+ padding: 5px 10px 5px 10px;
+ text-align: center;
+ border-radius: 5px;
+ background: #3E4A88
+}
+.table-search {
+	width: 130px;
+	border-radius: 10px;
+	outline: none;
+	padding-left: 10px;
+	margin-right: 10px;
+}
+.table-operating-save {
+	color: #5CD8FC;
+}
+.table-operating-delete, .table-error {
+	color: #FF488A;
+}
+.table-add {
+	cursor: pointer;
+ display: inline-block;
+ background: #02C797;
+ box-shadow: 0 0 16px #02c797;
+ border-radius: 50%;
+ font-size: 16px;
+ padding: 3px 7px 3px 7px;
+}

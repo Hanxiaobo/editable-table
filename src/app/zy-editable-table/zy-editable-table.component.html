@@ -1,0 +1,76 @@
+<div [id]="id + 'editable-table'" class="editable-table">
+	<table [id]="id + 'td_custom'" class="td_custom" cellspacing="0" cellpadding="2" width="100%" border="1">
+		<thead>
+			<tr>
+				<th *ngFor="let item of config" [style]="item.style">
+					<div class="table-head" *ngIf="item.search">
+						<mat-icon [ngClass]="{'hasFilter': searchObj[item.key] && searchObj[item.key].length}"
+							(click)="openSearch(item.key)">search</mat-icon>
+						<div class="search filters" (mousedown)="$event.stopPropagation()" *ngIf="showSearch[item.key]">
+							<input class="table-search" type="text" [(ngModel)]="searchObj[item.key]">
+							<span class="table-reset" (click)="searchReset(item.key)">{{'PUBLIC.reset'}}</span>
+						</div>
+					</div>
+					<div class="table-head" *ngIf="item.filters && item.filters.length">
+						<mat-icon [ngClass]="{'hasFilter': filterObj[item.key] && filterObj[item.key].length}"
+							(click)="openFilters(item.key)">filter_list</mat-icon>
+						<div class="filters" (mousedown)="$event.stopPropagation()"
+							*ngIf="item.filters && item.filters.length && filterObj[item.key] && showFilters[item.key]">
+							<div *ngFor="let i of item.filters">
+								<mat-checkbox color="primary" (change)="filtersChange($event,item.key, i.value)"
+									[checked]="filterObj[item.key].indexOf(i.value) > -1" [value]="i.value">{{i.name}}</mat-checkbox>
+							</div>
+							<div class="filter-foot">
+								<span class="table-reset" (click)="filersReset(item.key)">{{'PUBLIC.reset'}}</span>
+							</div>
+						</div>
+					</div>
+					<span>{{item.name}}</span>
+
+				</th>
+				<th>{{'PUBLIC.OPERATING'}}</th>
+			</tr>
+		</thead>
+
+		<tbody [sortablejs]="data" [sortablejsOptions]="normalOptions">
+			<ng-container *ngFor="let d of data;let i = index">
+				<tr [hidden]="!filterData(d) || d.Hide" (mousedown)="currentSelectIndex = i">
+					<td *ngFor="let item of config;">
+						<span *ngIf="!d.isEdit && item.type === 'text'">{{d[item.key]}}</span>
+						<span *ngIf="!d.isEdit && item.type !== 'text'">{{showFieldName(item.filters, d[item.key])}}</span>
+						<input *ngIf="item.type === 'text' && d.isEdit" (input)="clearError(i)" [(ngModel)]="copyData[item.key]" type="text">
+						<span class="table-error" *ngIf="item.type === 'text' && d.isEdit && showError[i]">{{'FORMERROR.FORMAT'}}</span>
+
+						<mat-slide-toggle *ngIf="item.type === 'boolean' && d.isEdit" [(ngModel)]="copyData[item.key]"
+							color="primary"></mat-slide-toggle>
+
+						<select
+						*ngIf="item.type === 'select' && item.filters && d.isEdit"
+						[(ngModel)]="copyData[item.key]"
+						>
+							<option *ngFor="let field of item.filters" [value]="field.value">{{ field.name }}
+							</option>
+						</select>
+					</td>
+
+					<td class="table-operating">
+						<mat-icon *ngIf="!d.isEdit" (click)="startEdit(data, d)"> create</mat-icon>
+						<mat-icon class="table-operating-delete" *ngIf="!d.isEdit" (click)="deleteData(i)">delete_forever</mat-icon>
+						<mat-icon class="table-operating-save" *ngIf="d.isEdit" (click)="save(data, i)">check_circle_outline</mat-icon>
+						<mat-icon *ngIf="d.isEdit" (click)="cancelEdit(data, i)">highlight_off</mat-icon>
+					</td>
+				</tr>
+			</ng-container>
+		</tbody>
+
+	</table>
+ <div class="table-add" (click)="tableAdd()">
+		＋
+	</div>
+
+	<div [id]="id + 'customMenu'" class="customMenu" [hidden]="!showMenu">
+		<div (click)="menuAction('up')">{{'PUBLIC.up_into'}}</div>
+		<div (click)="menuAction('down')">{{'PUBLIC.down_into'}}</div>
+		<div (click)="menuAction('delete')">{{'PUBLIC.delete'}}</div>
+	</div>
+</div>

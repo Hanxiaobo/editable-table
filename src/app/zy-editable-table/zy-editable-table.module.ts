@@ -1,7 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ZyEditableTableModule } from './zy-editable-table/zy-editable-table.module';
-
+import { CommonModule } from '@angular/common';
+import { ZyEditableTableComponent } from './zy-editable-table.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,25 +9,21 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { SortablejsModule } from 'ngx-sortablejs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
-import { AppComponent } from './app.component';
-
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [ZyEditableTableComponent],
   imports: [
-    BrowserModule,
+    CommonModule,
     MatSliderModule,
     MatSlideToggleModule,
     MatIconModule,
     FormsModule,
     MatFormFieldModule,
+    SortablejsModule,
     MatCheckboxModule,
-    MatSelectModule,
-		SortablejsModule.forRoot({ animation: 150 }),
-    ZyEditableTableModule
+    MatSelectModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  exports: [
+    ZyEditableTableComponent
+  ]
 })
-export class AppModule { }
+export class ZyEditableTableModule { }
