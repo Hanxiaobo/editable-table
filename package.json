@@ -10,6 +10,18 @@
     "e2e": "ng e2e",
     "packagr": "ng-packagr -p ng-package.json"
   },
+  "author": "17600132365@163.com",
+  "license": "MIT",
+  "description": "angular editable table",
+  "keywords": [
+    "angular",
+    "editable",
+    "table"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hanxiaobo/editable-table.git"
+  },
   "private": false,
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1000.5",
