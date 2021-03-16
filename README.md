@@ -1,7 +1,7 @@
 # ZyEditable
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.5.
-### angular电子表格，支持筛选、插入行、删除行、编辑表格内容、拖动列宽、拖动排序
+### angular电子表格，支持筛选、插入行、删除行、编辑表格内容、拖动列宽、拖动排序、双击文本复制
 github：htts://github.com/Hanxiaobo/editable-table
 ## Development server
 
@@ -27,7 +27,8 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-## 打包流程
+## 版本发布流程
+打版本号之后，
 根目录下执行: npm run packagr
 进入dist目录下执行： npm pack
 登录npm，执行：npm publish
