@@ -99,9 +99,24 @@ tbody > tr {
  font-size: 16px;
  padding: 3px 7px 3px 7px;
 }
-select {
-  color: #fff;
-  background: #313859;
-  border-radius: 5px;
-  outline: none;
+.label-info {
+	margin-left: 0;
+	font-size: 12px;
+	width: 15px;
+	line-height: 14px;
+}
+.copy-success-msg {
+	opacity: 0;
+	position: fixed;
+	color: #02c797;
+	border-radius: 5px;
+}
+
+@keyframes dsipear{
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
 }

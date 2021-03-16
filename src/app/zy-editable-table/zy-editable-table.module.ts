@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { SortablejsModule } from 'ngx-sortablejs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [ZyEditableTableComponent],
   imports: [
@@ -20,7 +21,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     SortablejsModule,
     MatCheckboxModule,
-    MatSelectModule
+    MatSelectModule,
+    BrowserAnimationsModule
   ],
   exports: [
     ZyEditableTableComponent

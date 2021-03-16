@@ -1,31 +1,33 @@
 <div [id]="id + 'editable-table'" class="editable-table">
-	<table [id]="id + 'td_custom'" class="td_custom" cellspacing="0" cellpadding="2" width="100%" border="1">
+	<table [id]="id + 'td_custom'" class="td_custom" cellspacing="0" cellpadding="2" style="max-width: 100%; table-layout: fixed; word-break: break-all;" border="1">
 		<thead>
 			<tr>
 				<th *ngFor="let item of config" [style]="item.style">
-					<div class="table-head" *ngIf="item.search">
-						<mat-icon [ngClass]="{'hasFilter': searchObj[item.key] && searchObj[item.key].length}"
-							(click)="openSearch(item.key)">search</mat-icon>
-						<div class="search filters" (mousedown)="$event.stopPropagation()" *ngIf="showSearch[item.key]">
-							<input class="table-search" type="text" [(ngModel)]="searchObj[item.key]">
-							<span class="table-reset" (click)="searchReset(item.key)">{{lang.reset || '重置'}}</span>
-						</div>
-					</div>
-					<div class="table-head" *ngIf="item.filters && item.filters.length">
-						<mat-icon [ngClass]="{'hasFilter': filterObj[item.key] && filterObj[item.key].length}"
-							(click)="openFilters(item.key)">filter_list</mat-icon>
-						<div class="filters" (mousedown)="$event.stopPropagation()"
-							*ngIf="item.filters && item.filters.length && filterObj[item.key] && showFilters[item.key]">
-							<div *ngFor="let i of item.filters">
-								<mat-checkbox color="primary" (change)="filtersChange($event,item.key, i.value)"
-									[checked]="filterObj[item.key].indexOf(i.value) > -1" [value]="i.value">{{i.name}}</mat-checkbox>
-							</div>
-							<div class="filter-foot">
-								<span class="table-reset" (click)="filersReset(item.key)">{{lang.reset || '重置'}}</span>
-							</div>
-						</div>
-					</div>
-					<span>{{item.name}}</span>
+					<div style="min-width: max-content;">
+            <div class="table-head" *ngIf="item.search">
+              <mat-icon [ngClass]="{'hasFilter': searchObj[item.key] && searchObj[item.key].length}"
+                (click)="openSearch(item.key)">search</mat-icon>
+              <div class="search filters" (mousedown)="$event.stopPropagation()" *ngIf="showSearch[item.key]">
+                <input class="table-search" type="text" [(ngModel)]="searchObj[item.key]">
+                <span class="table-reset" (click)="$event.stopPropagation();searchReset(item.key)">{{lang.reset || '重置'}}</span>
+              </div>
+            </div>
+            <div class="table-head" *ngIf="item.filters && item.filters.length">
+              <mat-icon [ngClass]="{'hasFilter': filterObj[item.key] && filterObj[item.key].length}"
+                (click)="openFilters(item.key)">filter_list</mat-icon>
+              <div class="filters" (mousedown)="$event.stopPropagation()"
+                *ngIf="item.filters && item.filters.length && filterObj[item.key] !== null && showFilters[item.key]">
+                <div *ngFor="let i of item.filters">
+                  <mat-checkbox color="primary" (change)="filtersChange($event,item.key, i.value)"
+                    [checked]="filterObj[item.key].indexOf(i.value) > -1" [value]="i.value">{{i.name}}</mat-checkbox>
+                </div>
+                <div class="filter-foot">
+                  <span class="table-reset" (click)="$event.stopPropagation();filersReset(item.key)">{{lang.reset || '重置'}}</span>
+                </div>
+              </div>
+            </div>
+            <span>{{item.name}}</span>
+          </div>
 
 				</th>
 				<th>{{lang.operating || '操作'}}</th>
@@ -33,25 +35,35 @@
 		</thead>
 
 		<tbody [sortablejs]="data" [sortablejsOptions]="normalOptions">
-			<ng-container *ngFor="let d of data;let i = index">
+      <ng-container *ngFor="let d of data;let i = index">
 				<tr [hidden]="!filterData(d) || d.Hide" (mousedown)="currentSelectIndex = i">
-					<td *ngFor="let item of config;">
-						<span *ngIf="!d.isEdit && item.type === 'text'">{{d[item.key]}}</span>
-						<span *ngIf="!d.isEdit && item.type !== 'text'">{{showFieldName(item.filters, d[item.key])}}</span>
-						<input *ngIf="item.type === 'text' && d.isEdit" (input)="clearError(i)" [(ngModel)]="copyData[item.key]" type="text">
-						<span class="table-error" *ngIf="item.type === 'text' && d.isEdit && showError[i]">{{lang.formerror || '格式错误'}}</span>
+					<ng-container *ngFor="let item of config;">
+						<td *ngIf="d.hasOwnProperty(item.key); else placeholder">
+							<span *ngIf="!d.isEdit && (item.type === 'text' || item.type === 'textarea')"
+							(dblclick)="copyeStr($event,d[item.key])"
+							>{{d[item.key]}}</span>
+							<span *ngIf="!d.isEdit && item.type !== 'text' && item.type !== 'textarea'">{{showFieldName(item.filters, d[item.key])}}</span>
+							<input *ngIf="item.type === 'text' && d.isEdit" (input)="clearError(i)" [(ngModel)]="copyData[item.key]" type="text">
+							<textarea *ngIf="item.type === 'textarea' && d.isEdit" (input)="clearError(i)" [(ngModel)]="copyData[item.key]" type="text"></textarea>
+							<span class="table-error" *ngIf="(item.type === 'text' || item.type === 'textarea') && d.isEdit && showError[i]">{{lang.formerror || '格式错误'}}</span>
 
-						<mat-slide-toggle *ngIf="item.type === 'boolean' && d.isEdit" [(ngModel)]="copyData[item.key]"
-							color="primary"></mat-slide-toggle>
+							<mat-slide-toggle *ngIf="item.type === 'boolean' && d.isEdit" [(ngModel)]="copyData[item.key]"
+								color="primary"></mat-slide-toggle>
 
-						<select
-						*ngIf="item.type === 'select' && item.filters && d.isEdit"
-						[(ngModel)]="copyData[item.key]"
-						>
-							<option *ngFor="let field of item.filters" [value]="field.value">{{ field.name }}
-							</option>
-						</select>
-					</td>
+							<mat-select
+							*ngIf="item.type === 'select' && item.filters && d.isEdit"
+							[(ngModel)]="copyData[item.key]"
+							>
+								<mat-option *ngFor="let field of item.filters" [value]="field.value">{{ field.name }}
+								</mat-option>
+							</mat-select>
+						</td>
+						<ng-template #placeholder>
+							<td></td>
+						</ng-template>
+
+					</ng-container>
+
 
 					<td class="table-operating">
 						<mat-icon *ngIf="!d.isEdit" (click)="startEdit(data, d)"> create</mat-icon>
@@ -73,4 +85,7 @@
 		<div (click)="menuAction('down')">{{lang.down || '向下插入一条'}}</div>
 		<div (click)="menuAction('delete')">{{lang.delete || '删除'}}</div>
 	</div>
+</div>
+<div [id]="id + 'copy-success-msg'" class="copy-success-msg" (animationend)="animationend($event)">
+	{{lang.copy_success || '复制成功！'}}
 </div>

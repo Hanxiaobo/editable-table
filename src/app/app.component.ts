@@ -13,15 +13,22 @@ export class AppComponent {
     up: '向上出入一条',
     down: '向下插入一条',
     delete: '删除',
-    formerror: '格式错误'
+    formerror: '格式错误',
+    copy_success: '复制成功'
   }
   tableConfig = [
     {
-      name: 'ip', key: 'ip', type: 'text', search: true,
+      name: '文本', key: 'ip', type: 'text', search: true,
       validators: function (val) {
         var str = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
         return str.test(val)
       }
+    },
+    {
+      name: '长文本',
+      key: 'textarea',
+      type: 'textarea',
+      search: true
     },
     {
       name: '开关', key: 'show', type: 'boolean',
@@ -39,17 +46,27 @@ export class AppComponent {
         { name: 'Textarea', value: 'textarea' }
       ]
     }];
-  data = [{ ip: "1.1.1.1", show: true, CaseSensitive: "checkbox" }];
+  data = [
+    {
+      ip: "1.1.1.1",
+      textarea: 'sadawieqoiwjdalksmdwoqruqpowdm.zmczoxjpoweq[wi023kd;osakdc;lsmc;23;lrmfsdl.xsadawieqoiwjdalksmdwoqruqpowdm.zmczoxjpoweq[wi023kd;osakdc;lsmc;23;lrmfsdl.xsadawieqoiwjdalksmdwoqruqpowdm.zmczoxjpoweq[wi023kd;osakdc;lsmc;23;lrmfsdl.xsadawieqoiwjdalksmdwoqruqpowdm.zmczoxjpoweq[wi023kd;osakdc;lsmc;23;lrmfsdl.xsadawieqoiwjdalksmdwoqruqpowdm.zmczoxjpoweq[wi023kd;osakdc;lsmc;23;lrmfsdl.x',
+      show: true,
+      CaseSensitive: "checkbox"
+    }
+  ];
 
   insetData($event) {
     let data = JSON.parse($event)
     console.log(data)
     if (data.type === 'up') {
       console.log('向上插入')
+      this.data.splice(data.index, 0, {ip: '', textarea: '', show: false, CaseSensitive: ''})
     } else if (data.type === 'down') {
       console.log('向下插入')
+      this.data.splice(data.index+1, 0, {ip: '', textarea: '', show: false, CaseSensitive: ''})
     } else if (data.type === 'delete') {
       console.log('删除')
+      this.data.splice(data.index, 1)
     } else if (data.type === 'edit') {
       console.log('编辑')
     }

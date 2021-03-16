@@ -66,13 +66,20 @@ export class ZyEditableTableComponent implements OnInit {
 		}
 	}
 
-	menuAction(type) {
+  menuAction(type) {
 		this.showMenu = false
 		this.outer.emit(JSON.stringify({ type: type, index: this.currentSelectIndex }))
+		Promise.resolve().then(() => {
+			let index = type === 'down' ? this.currentSelectIndex + 1 : this.currentSelectIndex
+			this.startEdit(this.data, this.data[index])
+		})
 	}
 
 	tableAdd() {
 		this.outer.emit(JSON.stringify({ type: 'down', index: this.data.length }))
+		Promise.resolve().then(() => {
+			this.startEdit(this.data, this.data[this.data.length-1])
+		})
 	}
 
 	startEdit(data,d) {
@@ -89,6 +96,16 @@ export class ZyEditableTableComponent implements OnInit {
 		delete data[index].isEdit
 		if (this.showError[index]) {
 			delete this.showError[index]
+		}
+
+		let hasNoValue = true
+		for(let i in data[index]) {
+			if (data[index][i]) {
+				hasNoValue = false
+			}
+		}
+		if (hasNoValue) {
+			this.deleteData(index)
 		}
 	}
 
@@ -185,13 +202,11 @@ export class ZyEditableTableComponent implements OnInit {
 	}
 
 	filersReset(key) {
-		delete this.filterObj[key]
-		this.showFilters[key] = false
+		this.filterObj[key] = []
 	}
 
 	searchReset(key) {
-		delete this.searchObj[key]
-		this.showSearch[key] = false
+		this.searchObj[key] = ''
 	}
 
 	filterData(d) {
@@ -219,5 +234,25 @@ export class ZyEditableTableComponent implements OnInit {
 			}
 		})
 		return name
+	}
+
+  copyeStr($event,value='') {
+		const oInput = document.createElement('input');
+		oInput.value = value;
+		document.body.appendChild(oInput);
+		oInput.select();
+		document.execCommand('Copy');
+		oInput.parentNode.removeChild(oInput);
+
+		let left = $event.pageX;
+		let top = $event.pageY;
+		let msg = document.getElementById(this.id + 'copy-success-msg');
+		msg.style.top = top - 30 + 'px';
+		msg.style.left = left + 'px';
+		msg.style.animation = 'dsipear 3s'
+	}
+
+	animationend($event) {
+		$event.target.style.animation = ''
 	}
 }
