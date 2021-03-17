@@ -13,7 +13,6 @@ export class AppComponent {
     up: '向上出入一条',
     down: '向下插入一条',
     delete: '删除',
-    formerror: '格式错误',
     copy_success: '复制成功'
   }
   tableConfig = [
@@ -21,7 +20,7 @@ export class AppComponent {
       name: '文本', key: 'ip', type: 'text', search: true,
       validators: function (val) {
         var str = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
-        return str.test(val)
+        return str.test(val) ? null : '格式错误'
       }
     },
     {

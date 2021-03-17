@@ -120,14 +120,19 @@ export class ZyEditableTableComponent implements OnInit {
 	}
 
 	save(data, index) {
-		let status = true;
+		let status = '';
 		this.config.map(item => {
 			if (item.validators && typeof item.validators === 'function') {
 				status = item.validators(this.copyData[item.key])
+        if (!this.showError[index]) {
+          this.showError[index] = {[item.key]: status}
+        } else {
+          this.showError[index][item.key] = status
+        }
+
 			}
 		})
-		if (!status) {
-			this.showError[index] = true
+		if (status) {
 			return
 		} else {
 			delete this.showError[index]

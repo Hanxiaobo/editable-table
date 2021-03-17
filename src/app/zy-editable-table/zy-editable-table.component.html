@@ -45,7 +45,7 @@
 							<span *ngIf="!d.isEdit && item.type !== 'text' && item.type !== 'textarea'">{{showFieldName(item.filters, d[item.key])}}</span>
 							<input *ngIf="item.type === 'text' && d.isEdit" (input)="clearError(i)" [(ngModel)]="copyData[item.key]" type="text">
 							<textarea *ngIf="item.type === 'textarea' && d.isEdit" (input)="clearError(i)" [(ngModel)]="copyData[item.key]" type="text"></textarea>
-							<span class="table-error" *ngIf="(item.type === 'text' || item.type === 'textarea') && d.isEdit && showError[i]">{{lang.formerror || '格式错误'}}</span>
+							<span class="table-error" *ngIf="(item.type === 'text' || item.type === 'textarea') && d.isEdit &&  showError[i] && showError[i][item.key]">{{showError[i][item.key]}}</span>
 
 							<mat-slide-toggle *ngIf="item.type === 'boolean' && d.isEdit" [(ngModel)]="copyData[item.key]"
 								color="primary"></mat-slide-toggle>
